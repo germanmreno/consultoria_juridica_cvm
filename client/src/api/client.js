@@ -1,4 +1,4 @@
-const API_BASE = '/api';
+const API_BASE = '/consultoria/api';
 
 function withToken(url) {
   const token = localStorage.getItem('token');
@@ -58,20 +58,20 @@ export const api = {
       return request(`/alliances/${allianceId}/files`, { method: 'POST', body: fd });
     },
     indexes: (fileId) => request(`/files/${fileId}/indexes`),
-    contentUrl: (fileId) => withToken(`/api/files/${fileId}/content`),
+    contentUrl: (fileId) => withToken(`${API_BASE}/files/${fileId}/content`),
   },
   indexes: {
     create: (fileId, data) =>
       request(`/files/${fileId}/indexes`, { method: 'POST', body: JSON.stringify(data) }),
     delete: (id) => request(`/indexes/${id}`, { method: 'DELETE' }),
-    exportUrl: (id) => withToken(`/api/indexes/${id}/export`),
-    viewUrl: (id) => withToken(`/api/indexes/${id}/export?inline=true`),
+    exportUrl: (id) => withToken(`${API_BASE}/indexes/${id}/export`),
+    viewUrl: (id) => withToken(`${API_BASE}/indexes/${id}/export?inline=true`),
   },
   evaluations: {
     get: (allianceId) => request(`/evaluations/${allianceId}`),
     save: (allianceId, items) =>
       request(`/evaluations/${allianceId}`, { method: 'PUT', body: JSON.stringify({ items }) }),
-    pdfUrl: (allianceId) => withToken(`/api/evaluations/${allianceId}/pdf`),
+    pdfUrl: (allianceId) => withToken(`${API_BASE}/evaluations/${allianceId}/pdf`),
   },
   users: {
     list: () => request('/users'),

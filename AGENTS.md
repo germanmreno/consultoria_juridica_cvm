@@ -16,8 +16,10 @@ exportación de recortes por tipo de documento.
 ## Puertos (fijos)
 - Backend: 3022
 - Frontend: 3025
-- El proxy /api de Vite apunta a http://localhost:3022
-- CORS solo admite http://localhost:3025
+- La app se sirve bajo la ruta base /consultoria/ (tanto frontend como API).
+- Vite: base='/consultoria/', BrowserRouter basename='/consultoria'.
+- Proxy en dev: /consultoria/api → http://localhost:3022 (con rewrite del prefijo).
+- CORS solo admite https://cvm.com.ve en producción.
 
 ## Comandos
 - Instalar todo: `npm run install:all`

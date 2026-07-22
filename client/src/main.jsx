@@ -16,7 +16,7 @@ import App from './App';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/consultoria">
       <MantineProvider theme={theme}>
         <Notifications position="top-right" />
         <AuthProvider>
