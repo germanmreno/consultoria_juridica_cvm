@@ -10,7 +10,7 @@ export default function AppHeader() {
     <Group h="100%" px="md" justify="space-between" wrap="nowrap">
       <Group gap="sm" wrap="nowrap" style={{ flex: 1, minWidth: 0 }}>
         <img
-          src="/logo-cvm.png"
+          src={`${import.meta.env.BASE_URL}logo-cvm.png`}
           alt="MIDMEIB - CVM"
           style={{ height: 44, width: 'auto', objectFit: 'contain' }}
         />
@@ -29,7 +29,7 @@ export default function AppHeader() {
 
       <Group gap="md" wrap="nowrap">
         <img
-          src="/logo-bolivia.png"
+          src={`${import.meta.env.BASE_URL}logo-bolivia.png`}
           alt="200 Años de la Batalla de Bolivia"
           style={{ height: 44, width: 'auto', objectFit: 'contain' }}
         />

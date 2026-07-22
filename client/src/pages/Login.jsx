@@ -31,14 +31,14 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col bg-gray-50">
       <div className="bg-white border-b border-gray-200 px-6 py-2 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <img src="/logo-cvm.png" alt="MIDMEIB - CVM" style={{ height: 56, width: 'auto', objectFit: 'contain' }} />
+          <img src={`${import.meta.env.BASE_URL}logo-cvm.png`} alt="MIDMEIB - CVM" style={{ height: 56, width: 'auto', objectFit: 'contain' }} />
           <div>
             <Text size="xs" fw={700} c="#1F3A6E" lh={1.15}>REPÚBLICA BOLIVARIANA DE VENEZUELA</Text>
             <Text size="xs" c="#1F3A6E" lh={1.15}>MINISTERIO DEL PODER POPULAR DE DESARROLLO MINERO Y ECOLÓGICO</Text>
             <Text size="xs" c="#7AB317" fw={600} lh={1.15}>CORPORACIÓN VENEZOLANA DE MINERÍA, S.A. (CVM)</Text>
           </div>
         </div>
-        <img src="/logo-bolivia.png" alt="200 Años de la Batalla de Bolivia" style={{ height: 56, width: 'auto', objectFit: 'contain' }} />
+        <img src={`${import.meta.env.BASE_URL}logo-bolivia.png`} alt="200 Años de la Batalla de Bolivia" style={{ height: 56, width: 'auto', objectFit: 'contain' }} />
       </div>
       <div className="flex-1 flex items-center justify-center">
         <Paper shadow="md" p="xl" withBorder className="w-full max-w-sm mx-4">
