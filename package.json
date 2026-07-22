@@ -1,0 +1,13 @@
+{
+  "name": "registro-juridico-cvm",
+  "private": true,
+  "scripts": {
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "dev": "concurrently -n server,client -c green,blue \"cd server && npm run dev\" \"cd client && npm run dev\"",
+    "db:init": "cd server && npx prisma migrate dev --name init && npm run db:seed",
+    "db:seed": "cd server && npx prisma db seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

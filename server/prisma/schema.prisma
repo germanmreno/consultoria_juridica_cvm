@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Rol {
+  ADMIN
+  OPERADOR
+  VISUALIZADOR
+}
+
+model User {
+  id           String    @id @default(uuid())
+  nombre       String
+  email        String    @unique
+  passwordHash String
+  rol          Rol       @default(OPERADOR)
+  activo       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  alliances    Alliance[]
+  files        File[]
+}
+
+model Alliance {
+  id                  String    @id @default(uuid())
+  denominacionSocial  String
+  rif                 String    @unique
+  representanteLegal  String
+  cedulaRepresentante String
+  telefono            String
+  email               String
+  sector              String
+  area                String
+  mineral             String    @default("ORO")
+  fecha               DateTime
+  createdById         String?
+  createdBy           User?     @relation(fields: [createdById], references: [id])
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  files               File[]
+  evaluations         Evaluation[]
+
+  @@map("alliances")
+}
+
+model DocumentType {
+  id          String           @id @default(uuid())
+  code        String           @unique
+  nombre      String
+  descripcion String?
+  obligatorio Boolean          @default(true)
+  orden       Int
+  activo      Boolean          @default(true)
+  valor       Float            @default(0)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  indexes     DocumentIndex[]
+  evaluations Evaluation[]
+
+  @@map("document_types")
+}
+
+model File {
+  id           String           @id @default(uuid())
+  allianceId   String
+  alliance     Alliance         @relation(fields: [allianceId], references: [id], onDelete: Cascade)
+  filename     String
+  originalName String
+  sizeBytes    Int
+  pageCount    Int
+  uploadedById String?
+  uploadedBy   User?            @relation(fields: [uploadedById], references: [id])
+  uploadedAt   DateTime         @default(now())
+  indexes      DocumentIndex[]
+
+  @@map("files")
+}
+
+model DocumentIndex {
+  id             String       @id @default(uuid())
+  fileId         String
+  file           File         @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  documentTypeId String
+  documentType   DocumentType @relation(fields: [documentTypeId], references: [id])
+  pageFrom       Int
+  pageTo         Int
+  notas          String?
+  createdAt      DateTime     @default(now())
+
+  @@unique([fileId, documentTypeId, pageFrom, pageTo])
+  @@map("document_indexes")
+}
+
+model Evaluation {
+  id             String       @id @default(uuid())
+  allianceId     String
+  alliance       Alliance     @relation(fields: [allianceId], references: [id], onDelete: Cascade)
+  documentTypeId String
+  documentType   DocumentType @relation(fields: [documentTypeId], references: [id])
+  estadoOverride String?      // "SI" | "NO" | "N/A" = manual override; null = auto from indexes
+  ponderacion    Float?       // effective weight for this alliance (null = use documentType.valor)
+  observaciones  String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([allianceId, documentTypeId])
+  @@map("evaluations")
+}
